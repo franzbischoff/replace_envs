@@ -19,7 +19,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ./
-      with:
-        milliseconds: 1000
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          # We must fetch at least the immediate parents so that if this is
+          # a pull request then we can checkout the head.
+          fetch-depth: 2
+      - name: Edit readme
+        uses: ./
+        with:
+          filename: 'README.md'
