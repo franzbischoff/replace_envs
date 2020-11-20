@@ -7,14 +7,21 @@ require('./sourcemap-register.js');module.exports =
 
 module.exports = edit_file;
 
-function edit_file(filename) {
+const core = __webpack_require__(186);
+const fs = __webpack_require__(747);
+// const replace = require("find-and-replace-anything");
 
-    const fs = __webpack_require__(747)
+function edit_file(from_file, to_file) {
 
     try {
-        if (fs.existsSync(filename)) {
+        if (fs.existsSync(from_file)) {
+            let data = fs.readFileSync(from_file, 'utf8');
+            let result = data.replace(/Just/g, 'Only');
+            fs.writeFileSync(to_file, result);
+            core.info(`File ${to_file} saved.`);
             return true
         }
+
     } catch (err) {
         console.error(err)
     }
@@ -30,26 +37,47 @@ function edit_file(filename) {
 
 const core = __webpack_require__(186);
 const file = __webpack_require__(860);
-
+const fs = __webpack_require__(747);
 
 // most @actions toolkit packages have async methods
-async function run() {
-  try {
-    const ms = core.getInput('filename')
-    core.setOutput('time', new Date().toTimeString());
-    core.info(`Starting Process`)
+async function main() {
+    try {
+        core.debug('Inside try block');
 
-    core.debug((new Date()).toTimeString()) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    if(file("README.md"))
-      core.info('Found File' + ms)
-    else
-      core.info('File not found')
-  } catch (error) {
-    core.setFailed(error.message)
-  }
+        const from_file = core.getInput('from_file');
+        const to_file = core.getInput('to_file');
+
+        if (!from_file) {
+            core.warning('`from_file` was not set, defaults to `README.md`');
+        }
+
+        if (core.isDebug()) {
+            core.debug('DEBUG TEST');
+        } else {
+            core.debug('Not Debug test');
+        }
+        core.info('Starting Process');
+
+        // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+
+        if (file(from_file, to_file)) {
+            core.info('All ok');
+        } else {
+            core.info('Some error');
+        }
+
+        core.info('Trying to print the file now');
+        let data = fs.readFileSync('README.md', 'utf8');
+        core.info('File content:');
+        core.info(data)
+
+    } catch (err) {
+        // setFailed logs the message and sets a failing exit code
+        core.setFailed(`Action failed with error ${err}`);
+    }
 }
 
-run();
+main();
 
 
 /***/ }),

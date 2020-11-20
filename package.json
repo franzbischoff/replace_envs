@@ -22,6 +22,7 @@
   "devDependencies": {
     "@vercel/ncc": "^0.24.0",
     "eslint": "^7.4.0",
+    "find-and-replace-anything": "^2.2.2",
     "jest": "^26.1.0"
   }
 }
