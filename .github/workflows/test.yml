@@ -28,4 +28,5 @@ jobs:
       - name: Edit readme
         uses: ./
         with:
-          filename: 'README.md'
+          from_file: 'README.md'
+          to_file: 'README.md'
