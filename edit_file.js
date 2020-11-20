@@ -12,12 +12,10 @@ function edit_file(from_file, to_file) {
             let result = data.replace(/Just/g, 'Only');
             fs.writeFileSync(to_file, result);
             core.info(`File ${to_file} saved.`);
-            return true
         }
-
     } catch (err) {
         console.error(err)
     }
 
-    return false
+    return true;
 }
