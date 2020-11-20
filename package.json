@@ -23,6 +23,6 @@
     "@vercel/ncc": "^0.25.1",
     "eslint": "^7.13.0",
     "find-and-replace-anything": "^2.2.2",
-    "jest": "^26.1.0"
+    "jest": "^26.6.3"
   }
 }
