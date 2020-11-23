@@ -3,31 +3,31 @@ const file = require('./replace_envs');
 
 // most @actions toolkit packages have async methods
 async function main() {
-    try {
-        const from_file = core.getInput('from_file');
-        const to_file = core.getInput('to_file');
+  try {
+    const from_file = core.getInput('from_file');
+    const to_file = core.getInput('to_file');
 
-        if (!from_file) {
-            core.warning('`from_file` was not set, defaults to `README.md`');
-        }
-
-        if (!to_file) {
-            core.warning('`from_file` was not set, defaults to `README.md`');
-        }
-
-        core.info('Starting Process');
-
-        // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-
-        if (file(from_file, to_file)) {
-            core.info('All ok.');
-        } else {
-            core.info('Something went wrong, check the logs.');
-        }
-    } catch (err) {
-        // setFailed logs the message and sets a failing exit code
-        core.setFailed(`Action failed with error ${err}`);
+    if (!from_file) {
+      core.warning('`from_file` was not set, defaults to `README.md`');
     }
+
+    if (!to_file) {
+      core.warning('`from_file` was not set, defaults to `README.md`');
+    }
+
+    core.info('Starting Process');
+
+    // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+
+    if (file(from_file, to_file)) {
+      core.info('All ok.');
+    } else {
+      core.info('Something went wrong, check the logs.');
+    }
+  } catch (err) {
+    // setFailed logs the message and sets a failing exit code
+    core.setFailed(`Action failed with error ${err}`);
+  }
 }
 
 // ENV VARS available on `act` library (for testing purposes)
@@ -76,6 +76,4 @@ async function main() {
 // * RUNNER_TOOL_CACHE
 // * RUNNER_OS
 
-
 main().then();
-
