@@ -1,3 +1,3 @@
 # Just a test
 
-Test ${THIS_VAR} and /home/runner/work/teste-action/teste-action.
+Test ${REPOSITORY_ACCOUNT} and ${REPOSITORY_SLUG}.

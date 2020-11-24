@@ -6,7 +6,7 @@ const fs = require('fs');
  * @param {PathLike} to_file
  */
 function replace_envs(from_file, to_file) {
-  const result = true;
+  let result = true;
 
   try {
     if (fs.existsSync(from_file)) {
@@ -17,14 +17,18 @@ function replace_envs(from_file, to_file) {
 
         if (typeof env === 'undefined') {
           core.warning(`Environment Variable ${match[1]} not found!`);
+          result = false;
           env = c;
         } else {
           core.info(`Replacing Environment Variable ${match[1]}.`);
         }
+
         return env;
       });
       fs.writeFileSync(to_file, res);
       core.info(`File ${to_file} saved.`);
+    } else {
+      result = false;
     }
   } catch (err) {
     core.error(err);

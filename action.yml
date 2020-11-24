@@ -1,15 +1,18 @@
 name: 'Wait'
 description: 'Wait a designated number of milliseconds'
 inputs:
-  from_file: # id of input
+  from_file: # URI of input
     description: 'Origin file'
     required: true
     default: 'README.md'
-  to_file: # id of output
+  to_file: # URI of output
     description: 'Destination file'
     required: true
     default: 'README.md'
+  commit: # commit changes
+    description: 'Commit changes?'
+    required: true
+    default: 'true'
 runs:
   using: 'node12'
   main: 'dist/index.js'
-#  post: 'cleanup.js'

@@ -8,9 +8,9 @@ on:
 
 jobs:
   # test action works running from the graph
-  test-full:
+  test-action:
     runs-on: ubuntu-latest
-    name: "Full test"
+    name: "test-action"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -23,3 +23,4 @@ jobs:
         with:
           from_file: 'README.md'
           to_file: 'README.md'
+          commit: 'false'

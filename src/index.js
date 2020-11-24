@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const file = require('./replace_envs');
+const replace_envs = require('./replace_envs');
 const push_commit = require('./push_commit');
 
 // most @actions toolkit packages have async methods
@@ -7,6 +7,7 @@ async function main() {
   try {
     const from_file = core.getInput('from_file');
     const to_file = core.getInput('to_file');
+    const commit = core.getInput('commit');
 
     if (!from_file) {
       core.warning('`from_file` was not set, defaults to `README.md`');
@@ -18,10 +19,22 @@ async function main() {
 
     core.info('Starting Process');
 
+    // split GITHUB_REPOSITORY into REPOSITORY_ACCOUNT and REPOSITORY_SLUG
+    const full_string = process.env.GITHUB_REPOSITORY.split('/');
+    const account = full_string[0];
+    const slug = full_string[1];
+
+    process.env.REPOSITORY_ACCOUNT = account;
+    process.env.REPOSITORY_SLUG = slug;
+
     // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
 
-    if (file(from_file, to_file)) {
-      await push_commit();
+    if (replace_envs(from_file, to_file)) {
+      if (commit === 'true') {
+        await push_commit();
+      } else {
+        core.info('Changes were not committed.');
+      }
       core.info('All ok.');
     } else {
       core.info('Something went wrong, check the logs.');

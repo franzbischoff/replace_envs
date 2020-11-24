@@ -1556,7 +1556,7 @@ function copyFile(srcFile, destFile, force) {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 const core = __webpack_require__(186);
-const file = __webpack_require__(489);
+const replace_envs = __webpack_require__(489);
 const push_commit = __webpack_require__(705);
 
 // most @actions toolkit packages have async methods
@@ -1564,6 +1564,7 @@ async function main() {
   try {
     const from_file = core.getInput('from_file');
     const to_file = core.getInput('to_file');
+    const commit = core.getInput('commit');
 
     if (!from_file) {
       core.warning('`from_file` was not set, defaults to `README.md`');
@@ -1575,10 +1576,22 @@ async function main() {
 
     core.info('Starting Process');
 
+    // split GITHUB_REPOSITORY into REPOSITORY_ACCOUNT and REPOSITORY_SLUG
+    const full_string = process.env.GITHUB_REPOSITORY.split('/');
+    const account = full_string[0];
+    const slug = full_string[1];
+
+    process.env.REPOSITORY_ACCOUNT = account;
+    process.env.REPOSITORY_SLUG = slug;
+
     // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
 
-    if (file(from_file, to_file)) {
-      await push_commit();
+    if (replace_envs(from_file, to_file)) {
+      if (commit === 'true') {
+        await push_commit();
+      } else {
+        core.info('Changes were not committed.');
+      }
       core.info('All ok.');
     } else {
       core.info('Something went wrong, check the logs.');
@@ -1647,6 +1660,7 @@ const exec = __webpack_require__(514);
 const core = __webpack_require__(186);
 
 async function push_commit() {
+  // noinspection LongLine
   const remote_repo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
 
   try {
@@ -1658,7 +1672,7 @@ async function push_commit() {
 
     // git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags $_FORCE_OPTION $_TAGS;
   } catch (err) {
-    core.info(`Action failed with error ${err}`);
+    core.info(`Commit failed: ${err}`);
   }
 }
 
@@ -1678,7 +1692,7 @@ const fs = __webpack_require__(747);
  * @param {PathLike} to_file
  */
 function replace_envs(from_file, to_file) {
-  const result = true;
+  let result = true;
 
   try {
     if (fs.existsSync(from_file)) {
@@ -1689,14 +1703,18 @@ function replace_envs(from_file, to_file) {
 
         if (typeof env === 'undefined') {
           core.warning(`Environment Variable ${match[1]} not found!`);
+          result = false;
           env = c;
         } else {
           core.info(`Replacing Environment Variable ${match[1]}.`);
         }
+
         return env;
       });
       fs.writeFileSync(to_file, res);
       core.info(`File ${to_file} saved.`);
+    } else {
+      result = false;
     }
   } catch (err) {
     core.error(err);

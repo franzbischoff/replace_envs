@@ -2,6 +2,7 @@ const exec = require('@actions/exec');
 const core = require('@actions/core');
 
 async function push_commit() {
+  // noinspection LongLine
   const remote_repo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
 
   try {
@@ -13,7 +14,7 @@ async function push_commit() {
 
     // git push "${remote_repo}" HEAD:${INPUT_BRANCH} --follow-tags $_FORCE_OPTION $_TAGS;
   } catch (err) {
-    core.info(`Action failed with error ${err}`);
+    core.info(`Commit failed: ${err}`);
   }
 }
 
