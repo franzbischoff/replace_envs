@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const file = require('./replace_envs');
+const push_commit = require('./push_commit');
 
 // most @actions toolkit packages have async methods
 async function main() {
@@ -20,6 +21,7 @@ async function main() {
     // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
 
     if (file(from_file, to_file)) {
+      await push_commit();
       core.info('All ok.');
     } else {
       core.info('Something went wrong, check the logs.');
