@@ -1,5 +1,7 @@
 <!-- badges -->
-
+![Licensed](https://github.com/franzbischoff/replace_envs/workflows/Licensed/badge.svg)
+![Build tests](https://github.com/franzbischoff/replace_envs/workflows/Build%20tests/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-green)
 <!-- end badges -->
 
 # Replace Environment Variables Action
@@ -38,6 +40,14 @@ push the changes later, by yourself, you can disable this behavior with the para
 - The input and output file can be either a `template -> definitive` or `definitive -> definitive`; this just means that
  the input and output may be the same file. The later attempts to replace, by this action, will 'fail' safely without an
   Error code.
+
+# Why use this action?
+
+I know there are other actions that accomplish the same objective, but:
+
+- This is self-contained (only needs to be preceded by actions/checkout)
+- It is plain JavaScript, few lines of code, easy to inspect and see that this action only does what it does.
+
 
 # Usage
 
