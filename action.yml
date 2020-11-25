@@ -1,5 +1,5 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'replace_envs'
+description: 'Replace Environment Variables with their values'
 inputs:
   from_file: # URI of input
     description: 'Origin file'
