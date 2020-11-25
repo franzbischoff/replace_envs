@@ -1,5 +1,9 @@
 name: 'replace_envs'
+author: 'Francisco Bischoff'
 description: 'Replace Environment Variables with their values'
+branding:
+  icon: 'repeat'  
+  color: 'blue'
 inputs:
   from_file: # URI of input
     description: 'Origin file'
