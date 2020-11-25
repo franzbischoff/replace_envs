@@ -11,7 +11,7 @@ function replace_envs(from_file, to_file) {
   try {
     if (fs.existsSync(from_file)) {
       const data = fs.readFileSync(from_file, 'utf8');
-      const res = data.replace(/\${\w+}/gi, c => {
+      const res = data.replace(/\${\w+}/gi, (c) => {
         const match = c.match(/\${(?<var>\w+)}/i);
         let env = process.env[match[1]];
 

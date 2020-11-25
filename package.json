@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/create-release"
+    "url": "git+https://github.com/franzbischoff/replace_envs"
   },
   "keywords": [
     "GitHub",
@@ -40,7 +40,7 @@
   "jest": {
     "testEnvironment": "node",
     "collectCoverageFrom": [
-      "src/create-release.js"
+      "tests/index.test.js"
     ],
     "coverageThreshold": {
       "global": {
