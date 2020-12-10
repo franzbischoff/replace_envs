@@ -4,6 +4,7 @@
 ![Licensed](https://github.com/franzbischoff/replace_envs/workflows/Licensed/badge.svg)
 ![Build tests](https://github.com/franzbischoff/replace_envs/workflows/Build%20tests/badge.svg)
 ![License](https://img.shields.io/badge/license-MIT-green)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/franzbischoff/replace_envs.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/franzbischoff/replace_envs/context:javascript)
 <!-- end badges -->
 
 # Replace Environment Variables Action
