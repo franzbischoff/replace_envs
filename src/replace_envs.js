@@ -6,30 +6,24 @@ const fs = require('fs');
  * @param {PathLike} to_file
  */
 function replace_envs(from_file, to_file) {
-  let result = true;
-
-  try {
-    if (fs.existsSync(from_file)) {
-      const data = fs.readFileSync(from_file, 'utf8');
-      const res = data.replace(/\${\w+}/gi, (c) => {
-        const match = c.match(/\${(?<var>\w+)}/i);
-        let env = process.env[match[1]];
-
-        if (typeof env === 'undefined') {
-          throw new Error(`Environment Variable ${match[1]} not found`);
-        } else {
-          core.info(`Replacing Environment Variable ${match[1]}.`);
-        }
-        return env;
-      });
-      fs.writeFileSync(to_file, res);
-      core.info(`File ${to_file} saved.`);
-    } else {
-      throw new Error(`Source file ${from_file} not found`)
-    }
-  } catch (err) {
-    core.error(err);
+  if (!fs.existsSync(from_file)) {
+    throw new Error(`Source file ${from_file} not found`)
   }
+  const data = fs.readFileSync(from_file, 'utf8');
+  const res = data.replace(/\${\w+}/gi, (c) => {
+    const match = c.match(/\${(?<var>\w+)}/i);
+    let key = match[1];
+    let env = process.env[key]
+
+    if (typeof env === 'undefined') {
+      throw new Error(`environment variable ${key} not found`);
+    } else {
+      core.info(`replacing environment variable ${key}.`);
+    }
+    return env;
+  });
+  fs.writeFileSync(to_file, res);
+  core.info(`File ${to_file} saved.`);
 }
 
 module.exports = replace_envs;
