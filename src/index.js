@@ -29,16 +29,13 @@ async function main() {
 
     // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
 
-    if (replace_envs(from_file, to_file)) {
-      if (commit === 'true') {
-        await push_commit();
-      } else {
-        core.info('Changes were not committed.');
-      }
-      core.info('All ok.');
+    replace_envs(from_file, to_file)
+    if (commit === 'true') {
+      await push_commit();
     } else {
-      core.info('Something went wrong, check the logs.');
+      core.info('Changes were not committed.');
     }
+    core.info('All ok.');
   } catch (err) {
     // setFailed logs the message and sets a failing exit code
     core.setFailed(`Action failed with error ${err}`);

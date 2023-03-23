@@ -16,25 +16,20 @@ function replace_envs(from_file, to_file) {
         let env = process.env[match[1]];
 
         if (typeof env === 'undefined') {
-          core.warning(`Environment Variable ${match[1]} not found!`);
-          result = false;
-          env = c;
+          throw new Error(`Environment Variable ${match[1]} not found`);
         } else {
           core.info(`Replacing Environment Variable ${match[1]}.`);
         }
-
         return env;
       });
       fs.writeFileSync(to_file, res);
       core.info(`File ${to_file} saved.`);
     } else {
-      result = false;
+      throw new Error(`Source file ${from_file} not found`)
     }
   } catch (err) {
     core.error(err);
   }
-
-  return result;
 }
 
 module.exports = replace_envs;
