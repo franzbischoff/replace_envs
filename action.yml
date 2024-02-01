@@ -2,7 +2,7 @@ name: 'replace_envs'
 author: 'Francisco Bischoff'
 description: 'Replace Environment Variables with their values'
 branding:
-  icon: 'repeat'  
+  icon: 'repeat'
   color: 'blue'
 inputs:
   from_file: # URI of input
@@ -18,5 +18,6 @@ inputs:
     required: true
     default: 'true'
 runs:
-  using: 'node12'
+  runs:
+    using: 'node20'
   main: 'dist/index.js'
