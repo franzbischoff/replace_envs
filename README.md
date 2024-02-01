@@ -59,7 +59,7 @@ Create a YAML file at `.github/workflows/myworkflow.yml`
 
 ```yaml
 steps:
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v4
   - uses: franzbischoff/replace_envs@v1
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

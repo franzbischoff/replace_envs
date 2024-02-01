@@ -1,8 +1,0 @@
-tasks:
-  - init: npm install -g npm && npm install && npm run build
-
-vscode:
-  extensions:
-    - dbaeumer.vscode-eslint@2.1.8:02aHhbJ0Q4aGdjHXlTdVKg==
-    - esbenp.prettier-vscode@5.8.0:cd2Jz796EPVnD5zeCyctPw==
-    - Orta.vscode-jest@4.0.0-alpha.1:TuNngpN2TTsC/Ck1qhIwrg==
