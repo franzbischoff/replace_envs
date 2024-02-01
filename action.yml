@@ -18,6 +18,5 @@ inputs:
     required: true
     default: 'true'
 runs:
-  runs:
-    using: 'node20'
+  using: 'node20'
   main: 'dist/index.js'
